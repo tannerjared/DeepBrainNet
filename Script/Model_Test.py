@@ -67,7 +67,6 @@ predicty = model.predict_generator(test_generator,verbose=1, steps = test_genera
 
 
 
-
 prediction_data = pd.DataFrame()
 prediction_data['ID'] = IDlist
 
