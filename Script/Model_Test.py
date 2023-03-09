@@ -21,7 +21,7 @@ import sys
 import os
 from os import listdir
 
-model = load_model(sys.argv[3], compile=False)
+model = load_model(sys.argv[3])
 print(model.summary())
 
 test_dir = sys.argv[1]
