@@ -59,7 +59,7 @@ for x in test_generator.filenames:
 
 
 test_generator.reset()
-predicty = model.predict_generator(test_generator,verbose=1, steps = test_generator.n/batch_size)
+predicty = model.predict(test_generator,verbose=1, steps = test_generator.n/batch_size)
 
 
 
