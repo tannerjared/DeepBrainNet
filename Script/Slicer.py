@@ -25,7 +25,7 @@ for file in os.listdir(directory):
     myNifti = nib.load((myDirectory +myFile))
     print(y, 'Train')
     y = 1+y
-    data = myNifti.get_data()
+    data = myNifti.get_fdata()
     data = data*(185.0/np.percentile(data, 97))
 
     scaler = StandardScaler()

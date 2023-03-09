@@ -27,7 +27,7 @@ while getopts 'uhd:o:m:' flag; do
 done
 
 
-CUDA_VISIBLE_DEVICES=$(get_CUDA_VISIBLE_DEVICES) || exit
+CUDA_VISIBLE_DEVICES=0 || exit
 export CUDA_VISIBLE_DEVICES
 
 
@@ -39,5 +39,5 @@ mkdir ../tmp/Test/
 
 python Slicer.py $DATA_PATH ../tmp/
 
-module load python/anaconda/3.5.6+tensorflow-gpu+pillow
+#module load python/anaconda/3.5.6+tensorflow-gpu+pillow
 python Model_Test.py ../tmp/ ${OUT_PATH}pred.csv $MODEL

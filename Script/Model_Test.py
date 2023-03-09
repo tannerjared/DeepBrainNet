@@ -1,7 +1,7 @@
 
 
 import keras
-from keras.applications.resnet50 import ResNet50
+from tensorflow.keras.applications.resnet50 import ResNet50
 from keras.preprocessing import image
 from keras import models, optimizers
 from keras.preprocessing.image import ImageDataGenerator
@@ -21,7 +21,7 @@ import sys
 import os
 from os import listdir
 
-model = load_model(sys.argv[3])
+model = load_model(sys.argv[3], compile=False)
 print(model.summary())
 
 test_dir = sys.argv[1]
