@@ -28,7 +28,7 @@ done
 
 
 CUDA_VISIBLE_DEVICES=0 || exit
-export CUDA_VISIBLE_DEVICES
+export CUDA_VISIBLE_DEVICES=0
 
 
 
