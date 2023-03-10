@@ -3,7 +3,7 @@ Convolutional Neural Network trained for age prediction using a large (n=11,729)
 
 Files are in HDF5(.h5) format for easy use in Keras. Model files initalize the architecture and the pre-trained weights.
 
-Other file can be found here: https://upenn.box.com/v/DeepBrainNet
+Other files can be found here: https://upenn.box.com/v/DeepBrainNet
 
 
 
@@ -17,4 +17,4 @@ Use test.sh in the Script folder to perform brain age prediction on T1 brain sca
 - T1 scans must be in nifti format
 - Scans shoud be skull-striped and linearly registered.
 
-JT note: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. They also do not detail what the target is. The assumption because they used FLIRT is MNI152 space.
+JT note: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. They also do not detail what the target is. My assumption is MNI152 space because they used FLIRT but that's an unknown.
