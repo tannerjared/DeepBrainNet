@@ -15,4 +15,6 @@ Use test.sh in the Script folder to perform brain age prediction on T1 brain sca
 ----Data Requirements----
 
 - T1 scans must be in nifti format
-- Scans shoud be skull-striped and linearly registered
+- Scans shoud be skull-striped and linearly registered.
+
+JT note: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. They also do not detail what the target is. The assumption because they used FLIRT is MNI152 space.
