@@ -26,11 +26,13 @@ My pipeline for processing invovled using antscorticalthickness.sh (https://gith
 There are other methods of skull-stripping that could be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer (although I generally also process with FreeSurfer).
 
 With preprocessed data, I ran this on a cluser computer like this:
-srun --mem=16gb --partition=gpu --gpus=1 --time=08:00:00 --pty bash -i
+`srun --mem=16gb --partition=gpu --gpus=1 --time=08:00:00 --pty bash -i`
 
 Within that interactive session I ran the following:
-module load python tensorflow cuda
-cd DeepBrainNet/Script
-./test.sh -d ../../input_forDeepBrainNet/ -o ../../DeepBrainNet_out/ -m ../Models/DBN_model.h5
+`module load python tensorflow cuda`
+
+`cd DeepBrainNet/Script`
+
+`./test.sh -d ../../input_forDeepBrainNet/ -o ../../DeepBrainNet_out/ -m ../Models/DBN_model.h5`
 
 It takes only a couple minutes to run.
