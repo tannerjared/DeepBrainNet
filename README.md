@@ -17,5 +17,6 @@ Use test.sh in the Script folder to perform brain age prediction on T1 brain sca
 - T1 scans must be in nifti format
 - Scans shoud be skull-stripped and linearly registered.
 
-JT note: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. They also do not detail what the target is. My assumption is MNI152 space at the target and 12 degrees of freedom because they used FLIRT but that's an unknown.
-My updated scripts clean out unnecessary modules and fix formatting issues. The scripts will need to be modified if your GPU is not CUDA_VISIBLE_DEVICES = 0. If you have multiple GPUs, you might need to modify those lines in the scripts.
+JT note: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. They also do not detail what the target is. My assumption is MNI152 space as the target and 12 degrees of freedom because they used FLIRT but that's an unknown.
+
+My updated scripts clean out unnecessary modules and fix formatting issues. There also were a couple updates to move away from legacy commands that are no longer supported. The scripts will need to be modified if your GPU is not CUDA_VISIBLE_DEVICES = 0. If you have multiple GPUs, you might need to modify those lines in the scripts.
