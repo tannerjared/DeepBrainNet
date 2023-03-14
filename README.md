@@ -35,4 +35,4 @@ Within that interactive session I ran the following:
 
 `./test.sh -d ../../input_forDeepBrainNet/ -o ../../DeepBrainNet_out/ -m ../Models/DBN_model.h5`
 
-It takes only a couple minutes to run.
+It takes only a couple minutes to run on 205 brains.
