@@ -24,3 +24,13 @@ My updated scripts clean out unnecessary modules and fix formatting issues. Ther
 My pipeline for processing invovled using antscorticalthickness.sh (https://github.com/tannerjared/MRI_Guide/blob/master/preprocessing_antscorticalthickness.md) to skull strip and do other initial processing. Then I took the skull stripped brain (ExtractedBrain0N4.nii.gz), copied it into a working directory with the participant ID prepended, and used FLIRT to do a 12 degrees of freedom registration to the MNI152 1mm brain. I also completed a 6 DOF trial, which produced similar results, but opted for 12 to do a better job of normalizing brain sizes. I also tried the BrainNormalizedToTemplate.nii.gz images from the ANTs preprocessing (these are non-linearly transformed) but those values were significantly different from the affine methods; because the DeepBrainNet model was implemented on affine-registered brains, the non-linear values were deemed to be inaccurate.
 
 There are other methods of skull-stripping that could be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer (although I generally also process with FreeSurfer).
+
+With preprocessed data, I ran this on a cluser computer like this:
+srun --mem=16gb --partition=gpu --gpus=1 --time=08:00:00 --pty bash -i
+
+Within that interactive session I ran the following:
+module load python tensorflow cuda
+cd DeepBrainNet/Script
+./test.sh -d ../../input_forDeepBrainNet/ -o ../../DeepBrainNet_out/ -m ../Models/DBN_model.h5
+
+It takes only a couple minutes to run.
