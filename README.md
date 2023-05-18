@@ -5,9 +5,6 @@ Files are in HDF5(.h5) format for easy use in Keras. Model files initalize the a
 
 Other files can be found here: https://upenn.box.com/v/DeepBrainNet
 
-
-
-
 Use test.sh in the Script folder to perform brain age prediction on T1 brain scans.
 
 - Run test.sh -h to see required parameters
@@ -15,15 +12,23 @@ Use test.sh in the Script folder to perform brain age prediction on T1 brain sca
 ----Data Requirements----
 
 - T1 scans must be in nifti format
-- Scans shoud be skull-stripped and linearly registered.
+- Scans shoud be skull-stripped (bias correction also necessary) and linearly registered.
 
-JT note: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. They also do not detail what the target is. My assumption is MNI152 space as the target and 12 degrees of freedom because they used FLIRT but that's an unknown.
+**JT note**: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. They also do not detail what the target is. My assumption is MNI152 space as the target and 12 degrees of freedom because they used FLIRT but that's an unknown.
 
 My updated scripts clean out unnecessary modules and fix formatting issues. There also were a couple updates to move away from legacy commands that are no longer supported. The scripts will need to be modified if your GPU is not CUDA_VISIBLE_DEVICES = 0. If you have multiple GPUs, you might need to modify those lines in the scripts.
 
 My pipeline for processing invovled using antscorticalthickness.sh (https://github.com/tannerjared/MRI_Guide/blob/master/preprocessing_antscorticalthickness.md) to skull strip and do other initial processing. Then I took the skull stripped brain (ExtractedBrain0N4.nii.gz), copied it into a working directory with the participant ID prepended, and used FLIRT to do a 12 degrees of freedom registration to the MNI152 1mm brain. I also completed a 6 DOF trial, which produced similar results, but opted for 12 to do a better job of normalizing brain sizes. I also tried the BrainNormalizedToTemplate.nii.gz images from the ANTs preprocessing (these are non-linearly transformed) but those values were significantly different from the affine methods; because the DeepBrainNet model was implemented on affine-registered brains, the non-linear values were deemed to be inaccurate.
 
-There are other methods of skull-stripping that could be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer (although I generally also process with FreeSurfer).
+**Note that brains need to be called for this to work smoothly**. I'm sure there's a fix to the code that would allow more flexible naming.
+
+SubjectID_BrainAligned.nii.gz
+
+Replace ID with your participant ID, or at least an ID you can match to your participant.
+
+If, for some reason, you end up with individual brain age estimates for each slice of the brain for each participant (what happens if that naming convention isn't followed), you could also take the median of the brain ages from each slice for a participant and that will give you the final predicted brain age.
+
+There are other methods of skull-stripping that could be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer (although I generally also process with FreeSurfer) and is the pipeline used by the developers of DeepBrainNet.
 
 With preprocessed data, I ran this on a cluser computer like this:
 `srun --mem=16gb --partition=gpu --gpus=1 --time=01:00:00 --pty bash -i`
@@ -35,4 +40,4 @@ Within that interactive session I ran the following:
 
 `./test.sh -d ../../input_forDeepBrainNet/ -o ../../DeepBrainNet_out/ -m ../Models/DBN_model.h5`
 
-It takes only a couple minutes to run on 205 brains.
+It takes only a couple minutes to run on 205 brains. It's also quick on a local computer.
