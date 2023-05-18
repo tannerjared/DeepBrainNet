@@ -12,9 +12,10 @@ Use test.sh in the Script folder to perform brain age prediction on T1 brain sca
 ----Data Requirements----
 
 - T1 scans must be in nifti format
-- Scans shoud be skull-stripped (bias correction also necessary) and linearly registered.
+- Scans shoud be skull-stripped (bias correction also necessary) and linearly registered to the MNI152 brain in the box.com link above (the one built into FSL should work too).
+- The DBN_model.h5 from the box.com link. This is about a 174 MB file.
 
-**JT note**: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. They also do not detail what the target is. My assumption is MNI152 space as the target and 12 degrees of freedom because they used FLIRT but that's an unknown.
+**JT note**: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. My assumption is 12.
 
 My updated scripts clean out unnecessary modules and fix formatting issues. There also were a couple updates to move away from legacy commands that are no longer supported. The scripts will need to be modified if your GPU is not CUDA_VISIBLE_DEVICES = 0. If you have multiple GPUs, you might need to modify those lines in the scripts.
 
@@ -30,7 +31,7 @@ For example: Subject2008_T1_BrainAligned.nii.gz
 
 If, for some reason, you end up with individual brain age estimates for each slice of the brain for each participant (what happens if that naming convention isn't followed), you could also take the median of the brain ages from each slice for a participant and that will give you the final predicted brain age.
 
-There are other methods of skull-stripping that could be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer (although I generally also process with FreeSurfer) and is the pipeline used by the developers of DeepBrainNet.
+There are other methods of skull-stripping that could be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer for a single brain using multiple cores (although I generally also process with FreeSurfer) and is the pipeline used by the developers of DeepBrainNet.
 
 With preprocessed data, I ran this on a cluser computer like this:
 `srun --mem=16gb --partition=gpu --gpus=1 --time=01:00:00 --pty bash -i`
