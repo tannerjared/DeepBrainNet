@@ -22,9 +22,11 @@ My pipeline for processing invovled using antscorticalthickness.sh (https://gith
 
 **Note that brains need to be called for this to work smoothly**. I'm sure there's a fix to the code that would allow more flexible naming.
 
-SubjectID_BrainAligned.nii.gz
+SubjectID_T1_BrainAligned.nii.gz
 
 Replace ID with your participant ID, or at least an ID you can match to your participant.
+
+For example: Subject2008_T1_BrainAligned.nii.gz
 
 If, for some reason, you end up with individual brain age estimates for each slice of the brain for each participant (what happens if that naming convention isn't followed), you could also take the median of the brain ages from each slice for a participant and that will give you the final predicted brain age.
 
