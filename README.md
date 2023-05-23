@@ -34,7 +34,7 @@ If, for some reason, you end up with individual brain age estimates for each sli
 There are other methods of skull-stripping that could be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer for a single brain using multiple cores (although I generally also process with FreeSurfer) and is the pipeline used by the developers of DeepBrainNet.
 
 With preprocessed data, I ran this on a cluser computer like this:
-`srun --mem=16gb --partition=gpu --gpus=1 --time=01:00:00 --pty bash -i`
+`srun --mem=32gb --partition=gpu --gpus=1 --time=00:10:00 --pty bash -i`
 
 Within that interactive session I ran the following:
 `module load python tensorflow cuda`
