@@ -31,7 +31,7 @@ For example: Subject2008_T1_BrainAligned.nii.gz
 
 If, for some reason, you end up with individual brain age estimates for each slice of the brain for each participant (what happens if that naming convention isn't followed), you could also take the median of the brain ages from each slice for a participant and that will give you the final predicted brain age.
 
-There are other methods of skull-stripping that could be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer for a single brain using multiple cores (although I generally also process with FreeSurfer) and is the pipeline used by the developers of DeepBrainNet.
+There are other methods of skull-stripping that might be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer for a single brain using multiple cores (although I generally also process with FreeSurfer) and is the pipeline used by the developers of DeepBrainNet. Using any other preprocessing method will require comparisons with ANTs.
 
 With preprocessed data, I ran this on a cluser computer like this:
 `srun --mem=32gb --nodes=1 --partition=gpu --gpus=a100:1 --time=00:10:00 --pty bash -i`
