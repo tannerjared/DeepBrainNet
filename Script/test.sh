@@ -9,7 +9,7 @@ MODEL=''
 print_usage() {
   printf "\n\nUsage:\n\n"
   printf "\tRequired Parameters:\n\n" 
-  printf "\t %s\n\n "  "[-d]: Path containing aligned nifti images" "[-o]: Output directory for prediciton csv" "[-m]: Specify Model files to use (.h5)"
+  printf "\t %s\n\n "  "[-d]: Path containing aligned nifti images" "[-o]: Output directory for prediction csv" "[-m]: Specify Model files to use (.h5)"
   printf "\nExample: ./test.sh -d /myPath/ -o ./outputPath/ -m ../myModel.h5\n\n"
   exit 1
 }
