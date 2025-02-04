@@ -51,11 +51,23 @@ An ARM64 container of DeepBrainNet is avaiable here
 
 `docker pull jjtanner/deepbrainnet:latest`
 
+You can also download the repository and build the Docker container locally. I recommend putting the model from `https://upenn.box.com/v/DeepBrainNet` in the Models directory first. Then it will be self-contained. You can also keep the model separate and pass the location of the model on your local machine to the container.
+
 With the data set up as described above, run the command like this. Change the paths of the input and output directories to match your setup.
 
 ```
 docker run --rm \                                   
   -v ./DeepBrainNet_in/:/data \
   -v ./DeepBrainNet_out/:/output \
+  deepbrainnet -d /data/ -o /output/ -m /app/Models/DBN_model.h5
+```
+
+Below is running the container if you want to pass the DBN_model.h5 from your local machine. Note that the container on DockerHub has the model included.
+
+```
+docker run --rm \                                   
+  -v ./DeepBrainNet_in/:/data \
+  -v ./DeepBrainNet_out/:/output \
+  -v ./DeepBrainNet/Models/DBN_model.h5:/app/Models/DBN_model.h5 \
   deepbrainnet -d /data/ -o /output/ -m /app/Models/DBN_model.h5
 ```
