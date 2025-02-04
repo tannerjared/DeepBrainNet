@@ -44,3 +44,18 @@ Within that interactive session I ran the following:
 `./test.sh -d ../../input_forDeepBrainNet/ -o ../../DeepBrainNet_out/ -m ../Models/DBN_model.h5`
 
 It takes only a couple minutes to run on 205 brains. It's also quick on a local computer.
+
+## Docker
+
+An ARM64 container of DeepBrainNet is avaiable here
+
+`docker pull jjtanner/deepbrainnet:latest`
+
+With the data set up as described above, run the command like this. Change the paths of the input and output directories to match your setup.
+
+```
+docker run --rm \                                   
+  -v ./DeepBrainNet_in/:/data \
+  -v ./DeepBrainNet_out/:/output \
+  deepbrainnet -d /data/ -o /output/ -m /app/Models/DBN_model.h5
+```
