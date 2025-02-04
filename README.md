@@ -62,7 +62,7 @@ docker run --rm \
   deepbrainnet -d /data/ -o /output/ -m /app/Models/DBN_model.h5
 ```
 
-Below is running the container if you want to pass the DBN_model.h5 from your local machine. Note that the container on DockerHub has the model included.
+Below is running the container if you want to pass the DBN_model.h5 from your local machine. Note that the container on DockerHub has the model included. That container can be run with the above command.
 
 ```
 docker run --rm \                                   
