@@ -1,15 +1,14 @@
-#! /bin/bash
-
-
-
+#!/bin/bash
+# test.sh
 
 DATA_PATH=''
 OUT_PATH=''
 MODEL=''
+
 print_usage() {
   printf "\n\nUsage:\n\n"
   printf "\tRequired Parameters:\n\n" 
-  printf "\t %s\n\n "  "[-d]: Path containing aligned nifti images" "[-o]: Output directory for prediction csv" "[-m]: Specify Model files to use (.h5)"
+  printf "\t %s\n\n " "[-d]: Path containing aligned nifti images" "[-o]: Output directory for prediction csv" "[-m]: Specify Model file (.h5)"
   printf "\nExample: ./test.sh -d /myPath/ -o ./outputPath/ -m ../myModel.h5\n\n"
   exit 1
 }
@@ -21,23 +20,14 @@ while getopts 'uhd:o:m:' flag; do
     d) DATA_PATH="${OPTARG}" ;;
     o) OUT_PATH="${OPTARG}" ;;
     m) MODEL="${OPTARG}" ;;
-    *) print_usage
-       exit 1 ;;
+    *) print_usage; exit 1 ;;
   esac
 done
 
-
-CUDA_VISIBLE_DEVICES=0 || exit
 export CUDA_VISIBLE_DEVICES=0
 
-
-
-
-rm -r ../tmp/
-mkdir ../tmp/
-mkdir ../tmp/Test/
+rm -rf ../tmp/
+mkdir -p ../tmp/Test/All/
 
 python Slicer.py $DATA_PATH ../tmp/
-
-#module load python/anaconda/3.5.6+tensorflow-gpu+pillow
-python Model_Test.py ../tmp/ ${OUT_PATH}pred.csv $MODEL
+python Model_Test.py ../tmp/Test/All/ ${OUT_PATH}pred.csv $MODEL

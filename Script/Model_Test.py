@@ -1,33 +1,37 @@
+import os
+import sys
 from keras.preprocessing.image import ImageDataGenerator
-
 import numpy as np
 import pandas as pd
-
-# import h5py
 from keras.models import load_model
-import sys
-import os
 
 os.environ['CUDA_VISIBLE_DEVICES'] = "0"
-
 model = load_model(sys.argv[3])
 print(model.summary())
 
-test_dir = sys.argv[1]
+# Use the parent directory of the provided folder and tell flow_from_directory which class folder to use:
+test_dir = str(sys.argv[1])  # e.g., "../tmp/Test/All/"
+parent_dir = os.path.dirname(test_dir.rstrip('/'))  # should give "../tmp/Test"
+print(parent_dir)
 
 batch_size = 80
+datagen_test = ImageDataGenerator(
+    rescale=1./255,
+    horizontal_flip=False,
+    vertical_flip=False,
+    featurewise_center=False,
+    featurewise_std_normalization=False
+)
 
-datagen_test = ImageDataGenerator(rescale=1./255, horizontal_flip=False, vertical_flip=False,
-                                  featurewise_center=False, featurewise_std_normalization=False)
-
-print(test_dir)
-
+# Specify the class subfolder "All" explicitly:
 test_generator = datagen_test.flow_from_directory(
-    directory=str(test_dir),
+    directory=parent_dir,
+    classes=['All'],
     batch_size=batch_size,
     seed=42,
     shuffle=False,
-    class_mode=None)
+    class_mode=None
+)
 
 labels_test = []
 sitelist = []
