@@ -55,11 +55,20 @@ An AMD64 (e.g., Intel or AMD processors) version is here
 
 `docker pull jjtanner/deepbrainnet:amd64`
 
-With the data set up as described above, run the command like this. Change the paths of the input and output directories to match your setup.
+With the data set up as described above, run the command like this. Change the paths of the input and output directories to match your setup. This is assuming you are running a locally built container.
 
 ```
 docker run --rm \                                   
   -v ./DeepBrainNet_in/:/data \
   -v ./DeepBrainNet_out/:/output \
   deepbrainnet -d /data/ -o /output/ -m /app/Models/DBN_model.h5
+```
+
+Using one of my created containers
+
+```
+docker run --rm \                                   
+  -v ./DeepBrainNet_in/:/data \
+  -v ./DeepBrainNet_out/:/output \
+  jjtanner/deepbrainnet:amd64 -d /data/ -o /output/ -m /app/Models/DBN_model.h5
 ```
