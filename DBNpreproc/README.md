@@ -45,6 +45,14 @@ docker run --rm \
 dbn-preproc /data/input /data/output
 ```
 
-The script inside the container requires T1 files to be named like: `sub-01_T1w.nii.gz`
+The script inside the container requires T1 files to be named like:
+```sub-01_T1w.nii.gz
+sub-02_T1w.nii.gz
+...
+```
 
 The container will preprocess all sub-*_T1w.nii.gz files in your input directory and save the outputs to your specified output directory.
+
+Note that the container limits ITK threads/cores to 4. You are welcome to change the default in the Dockerfile and in the automate_preprocessing.sh script depending on your system resources. More cores will result in a faster processing but require more RAM and cores (of course).
+
+It's likely faster to run this in parallel than serial. That would require multiple input and output directories and running multiple instances of the Docker container at the same time.
