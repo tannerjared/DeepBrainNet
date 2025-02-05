@@ -46,7 +46,8 @@ dbn-preproc /data/input /data/output
 ```
 
 The script inside the container requires T1 files to be named like:
-```sub-01_T1w.nii.gz
+```
+sub-01_T1w.nii.gz
 sub-02_T1w.nii.gz
 ...
 ```
