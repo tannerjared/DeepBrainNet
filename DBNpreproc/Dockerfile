@@ -1,77 +1,65 @@
-# Use Ubuntu 20.04 as the base image
-FROM ubuntu:20.04
+# Start with Debian slim (you can switch to Ubuntu if you truly want 20.04)
+FROM debian:bullseye-slim
 
-# Set non-interactive frontend to avoid prompts during package installation
-ENV DEBIAN_FRONTEND=noninteractive
+# Environment variables
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG="en_US.UTF-8" \
+    LC_ALL="en_US.UTF-8" \
+    ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=4
 
-# Optional locale settings from the first Dockerfile (if desired)
-ENV LANG="en_US.UTF-8" \
-    LC_ALL="en_US.UTF-8"
-
-# Set a default number of threads for ITK-based tools
-ENV ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=4
-
-# Install general dependencies and FSL dependencies
+# Install all dependencies in one shot, then clean up
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    wget \
-    gnupg \
-    ca-certificates \
-    git \
-    build-essential \
-    cmake \
-    python3 \
-    python3-pip \
-    zlib1g-dev \
-    locales \
-    curl \
-    unzip \
+    # General build & utility tools
+    wget gnupg ca-certificates git build-essential bzip2 cmake \
+    curl unzip bc dc file locales nano sudo \
+    # Python
+    python3 python3-pip \
+    # Libraries needed for FSL/ANTs
+    zlib1g-dev libfontconfig1 libfreetype6 libgl1-mesa-dev libgl1-mesa-dri \
+    libglu1-mesa-dev libgomp1 libice6 libopenblas-base libxcursor1 \
+    libxft2 libxinerama1 libxrandr2 libxrender1 libxt6 \
     && rm -rf /var/lib/apt/lists/* \
+    # Configure locales
     && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && dpkg-reconfigure --frontend=noninteractive locales \
     && update-locale LANG="en_US.UTF-8"
 
-# --- BEGIN ANTs INSTALLATION ---
+# --- ANTs INSTALLATION ---
+ENV ANTSPATH="/opt/ants-2.4.3/"
+ENV PATH="${ANTSPATH}:${PATH}"
 
-ENV ANTSPATH="/opt/ants-2.4.3/" \
-    PATH="/opt/ants-2.4.3:$PATH"
-
-RUN apt-get update -qq \
-    && apt-get install -y -q --no-install-recommends \
-           ca-certificates \
-           curl \
-           unzip \
-    && rm -rf /var/lib/apt/lists/* \
-    && echo "Downloading ANTs ..." \
+RUN echo "Downloading ANTs ..." \
     && curl -fsSL -o ants.zip \
        https://github.com/ANTsX/ANTs/releases/download/v2.4.3/ants-2.4.3-centos7-X64-gcc.zip \
     && unzip ants.zip -d /opt \
     && mv /opt/ants-2.4.3/bin/* /opt/ants-2.4.3 \
     && rm ants.zip
 
-# --- END ANTs INSTALLATION ---
+# --- FSL INSTALLATION ---
+ENV FSLDIR="/opt/fsl-6.0.7.1"
+ENV PATH="${FSLDIR}/bin:${PATH}"
+ENV FSLOUTPUTTYPE="NIFTI_GZ" \
+    FSLMULTIFILEQUIT="TRUE" \
+    FSLTCLSH="${FSLDIR}/bin/fsltclsh" \
+    FSLWISH="${FSLDIR}/bin/fslwish" \
+    FSLLOCKDIR="" \
+    FSLMACHINELIST="" \
+    FSLREMOTECALL="" \
+    FSLGECUDAQ="cuda.q"
 
-# Neurodebian/FSL installation steps from the second Dockerfile
-RUN wget -O- http://neuro.debian.net/lists/bionic.us-ca.full \
-    | tee /etc/apt/sources.list.d/neurodebian.sources.list \
-    && apt-key adv --recv-keys --keyserver hkps://keyserver.ubuntu.com 0xA5D32F012649A5A9 \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends fsl-core \
-    && rm -rf /var/lib/apt/lists/*
+RUN echo "Installing FSL ..." \
+    && curl -fsSL https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/releases/fslinstaller.py \
+       | python3 - -d /opt/fsl-6.0.7.1 -V 6.0.7.1
 
-# Set FSL environment variables
-ENV FSLDIR=/usr/share/fsl/6.0
-ENV PATH=$FSLDIR/bin:$PATH
-RUN echo ". $FSLDIR/etc/fslconf/fsl.sh" >> ~/.bashrc
-
-# Copy your templates and scripts
+# Copy in templates and scripts
 COPY templates/ /opt/app/templates/
 COPY script/ /opt/app/script/
 
-# Make your primary script executable
+# Make script executable
 RUN chmod +x /opt/app/script/automate_preprocessing.sh
 
 # Set working directory
 WORKDIR /data
 
-# Final entrypoint for the Dockerfile
+# Final entrypoint
 ENTRYPOINT ["/opt/app/script/automate_preprocessing.sh"]
