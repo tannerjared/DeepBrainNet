@@ -51,6 +51,10 @@ An ARM64 container of DeepBrainNet is avaiable here
 
 `docker pull jjtanner/deepbrainnet:latest`
 
+An AMD64 (e.g., Intel or AMD processors) version is here
+
+`docker pull jjtanner/deepbrainnet:amd64`
+
 With the data set up as described above, run the command like this. Change the paths of the input and output directories to match your setup.
 
 ```
