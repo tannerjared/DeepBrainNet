@@ -1,6 +1,6 @@
 This Docker container will automatically preprocess T1-weighted images as preparation for DeepBrainNet calculation.
 
-Needed template files can be downloaded
+All brain template files have been uploaded to GitHub other than T_template0.nii.gz. You can download that and all T_template and Priors files as follows
 
 ```
 wget https://s3-eu-west-1.amazonaws.com/pfigshare-u-files/3133832/Oasis.zip
@@ -27,8 +27,6 @@ priors4.nii.gz
 priors5.nii.gz
 priors6.nii.gz
 ```
-
-All files have been uploaded to GitHub other than T_template0.nii.gz. You can download that and all T_template and Priors files from the previously posted link.
 
 The MNI152_T1_1mm_brain_LPS_filled.nii.gz is also hosted here: https://upenn.box.com/v/DeepBrainNet
 
