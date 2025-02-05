@@ -75,9 +75,9 @@ for T1FILE in "$INPUT_DIR"/sub-*_T1w.nii.gz; do
           -ref "$TEMPLATE_MNI" \
           -omat "${SUBJ_DIR}/sub-${PARTICIPANT_ID}_T1_BrainAligned.mat" \
           -out "$FINAL_FILENAME" \
-          -dof 12
+          -dof 12 \
+          -searchrx -180 180 -searchry -180 180 -searchrz -180 180
     
     echo "Finished processing participant $PARTICIPANT_ID. Output saved as $FINAL_FILENAME"
 done
-
 echo "All subjects processed."
