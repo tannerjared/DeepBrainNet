@@ -28,7 +28,7 @@ priors5.nii.gz
 priors6.nii.gz
 ```
 
-All files have been uploaded to GitHub other than T_template0.nii.gz. Download that (and all T_template and Priors files from the previously posted link).
+All files have been uploaded to GitHub other than T_template0.nii.gz. You can download that and all T_template and Priors files from the previously posted link.
 
 The MNI152_T1_1mm_brain_LPS_filled.nii.gz is also hosted here: https://upenn.box.com/v/DeepBrainNet
 
@@ -52,7 +52,7 @@ sub-02_T1w.nii.gz
 ...
 ```
 
-The container will preprocess all sub-*_T1w.nii.gz files in your input directory and save the outputs to your specified output directory.
+The container will preprocess all sub-*_T1w.nii.gz files in your input directory and save the outputs to your specified output directory. It can take anywhere from about **30 minutes (using 12+ cores) to 6 hours (using 1 core) per brain**.
 
 Note that the container limits ITK threads/cores to 4. You are welcome to change the default in the Dockerfile and in the automate_preprocessing.sh script depending on your system resources. More cores will result in a faster processing but require more RAM and cores (of course).
 
