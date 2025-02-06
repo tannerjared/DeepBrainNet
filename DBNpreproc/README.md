@@ -1,5 +1,7 @@
 This Docker container will automatically preprocess T1-weighted images as preparation for DeepBrainNet calculation.
 
+**This container does not (yet) work on Apple Silicon. The DeepBrainNet container does but this is so far AMD/X_64 only.**
+
 All brain template files have been uploaded to GitHub other than T_template0.nii.gz. You can download that and all T_template and Priors files as follows
 
 ```
