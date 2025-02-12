@@ -1,4 +1,9 @@
-This Docker container will automatically preprocess T1-weighted images as preparation for DeepBrainNet calculation.
+This Docker container will automatically preprocess T1-weighted images as preparation for DeepBrainNet calculation. At its core, it is a container with both ANTs and FSL. As such, it has the ability to be used for many processing pipelines. You are welcome to update the 
+`ENTRYPOINT ["/opt/app/script/automate_preprocessing.sh"]` part in the Dockerfile to be more generic.
+
+You can also run the Docker container like this to get an interactive bash terminal. You'd have access to ANTS and FSL command line tools.
+
+`docker run -it --entrypoint /bin/bash jjtanner/dbn-preproc:latest`
 
 **This container does not (yet) work on Apple Silicon. The DeepBrainNet container does but this is so far AMD/X86 only.**
 
