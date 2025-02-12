@@ -1,4 +1,4 @@
-# Start with Debian slim (you can switch to Ubuntu if you truly want 20.04)
+# Start with Debian slim (you can switch to Ubuntu or other Linux distributions)
 FROM debian:bullseye-slim
 
 # Environment variables
