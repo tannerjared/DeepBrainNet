@@ -51,6 +51,10 @@ An ARM64 container of DeepBrainNet is avaiable here
 
 `docker pull jjtanner/deepbrainnet:latest`
 
+An AMD64 / X_64 (Intel/AMD processors) container is here
+
+`docker pull jjtanner/deepbrainnet:amd64`
+
 You can also download the repository and build the Docker container locally. I recommend putting the model from `https://upenn.box.com/v/DeepBrainNet` in the Models directory first. Then it will be self-contained. You can also keep the model separate and pass the location of the model on your local machine to the container.
 
 With the data set up as described above, run the command like this. Change the paths of the input and output directories to match your setup.
