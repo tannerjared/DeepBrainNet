@@ -36,13 +36,23 @@ Build the Docker container locally like this from within the DBNpreproc director
 ```
 docker build -t dbn-preproc .
 ```
+You can download a prebuilt AMD64/X_64 container that includes all template brain images like this
 
-Run the container like this
+`docker pull jjtanner/dbn-preproc:latest`
+
+Run the container like this if you built locally
 ```
 docker run --rm \
 -v ./DBNpreproc_in:/data/input \
 -v ./DBNpreproc_out:/data/output \
 dbn-preproc /data/input /data/output
+```
+Run the container like this to pull from the Docker Hub
+```
+docker run --rm \
+-v ./DBNpreproc_in:/data/input \
+-v ./DBNpreproc_out:/data/output \
+jjtanner/dbn-preproc:latest /data/input /data/output
 ```
 
 The script inside the container requires T1 files to be named like:
