@@ -25,4 +25,4 @@ WORKDIR /app/Script
 RUN chmod +x test.sh
 
 # Set the entrypoint to run test.sh (which calls python Slicer.py and Model_Test.py)
-ENTRYPOINT ["bash", "test.sh"]
+ENTRYPOINT ["bash", "/app/Script/test.sh"]
