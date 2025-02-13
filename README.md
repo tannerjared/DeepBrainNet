@@ -75,3 +75,20 @@ docker run --rm \
   -v ./DeepBrainNet/Models/DBN_model.h5:/app/Models/DBN_model.h5 \
   deepbrainnet -d /data/ -o /output/ -m /app/Models/DBN_model.h5
 ```
+
+## Apptainer
+
+Build the container like this.
+
+`apptainer build deepbrainnet.sif docker://jjtanner/deepbrainnet:amd64`
+
+Run like this from the directory containing input and output directories
+
+```
+apptainer run --pwd /app/Script \
+--bind ./DeepBrainNet_in/:/data/ \
+--bind ./DeepBrainNet_out/:/output/ \
+--bind ./tmp/:/app/tmp/ \
+deepbrainnet.sif \
+-d /data/ -o /output/ -m /app/Models/DBN_model.h5
+```
