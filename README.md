@@ -78,6 +78,8 @@ docker run --rm \
 
 ## Apptainer
 
+After running the preprocessing (e.g., https://github.com/tannerjared/DeepBrainNet/tree/Docker/DBNpreproc) you are ready to calculate brain age using DeepBrainNet.
+
 Build the container like this.
 
 `apptainer build deepbrainnet.sif docker://jjtanner/deepbrainnet:amd64`
