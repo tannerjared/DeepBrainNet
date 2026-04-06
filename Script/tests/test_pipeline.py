@@ -50,7 +50,8 @@ class TestExtractSubjectId(unittest.TestCase):
         self.assertEqual(result, "Sub01_T1_Brain")
 
     def test_windows_style_path_separator(self):
-        # os.path.basename handles backslashes on Windows; simulate manually
+        # os.path.basename handles backslashes on Linux too when given a plain
+        # basename (no directory component), so this tests the no-prefix case.
         result = extract_subject_id("Sub01_T1_Brain-0.jpg", "_T1")
         self.assertEqual(result, "Sub01")
 
