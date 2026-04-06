@@ -5,9 +5,37 @@ Files are in HDF5(.h5) format for easy use in Keras. Model files initalize the a
 
 Other files can be found here: https://upenn.box.com/v/DeepBrainNet
 
-Use test.sh in the Script folder to perform brain age prediction on T1 brain scans.
+Use `test.sh` in the Script folder to perform brain age prediction on T1 brain scans, or use `run_dbn.py` for a fully Python-native end-to-end pipeline.
 
-- Run test.sh -h to see required parameters
+- Run `test.sh -h` to see required parameters
+
+## Quick Start
+
+### Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Using the Python wrapper (recommended)
+```bash
+cd DeepBrainNet/Script
+python run_dbn.py --data /path/to/niftis/ --output results.csv --model ../Models/DBN_model.h5
+```
+Optional flags:
+- `--gpu 1` — use a specific GPU (default: 0)
+- `--cpu-only` — disable GPU entirely
+- `--workers 8` — parallel NIfTI slicing workers (default: CPU core count)
+- `--id-pattern _T1w` — subject-ID delimiter for non-standard filenames
+- `--no-cleanup` — keep temporary slice images for inspection
+- `--verbose` — enable debug logging
+
+### Using the shell script
+```bash
+cd DeepBrainNet/Script
+./test.sh -d /path/to/niftis/ -o /output/dir/ -m ../Models/DBN_model.h5
+```
+Optional flags:
+- `-g 1` — use GPU device 1 (default: 0; use `-1` for CPU only)
 
 ----Data Requirements----
 
@@ -17,7 +45,7 @@ Use test.sh in the Script folder to perform brain age prediction on T1 brain sca
 
 **JT note**: The authors are not clear if the linear registration is 6, 9, or 12 degrees of freedom. My assumption is 12.
 
-My updated scripts clean out unnecessary modules and fix formatting issues. There also were a couple updates to move away from legacy commands that are no longer supported. The scripts will need to be modified if your GPU is not CUDA_VISIBLE_DEVICES = 0. If you have multiple GPUs, you might need to modify those lines in the scripts. You also might need to set tensorflow==2.15.
+My updated scripts clean out unnecessary modules and fix formatting issues. There also were a couple updates to move away from legacy commands that are no longer supported. GPU configuration is now handled via a command-line flag (`-g` in `test.sh`, or `--gpu` / `--cpu-only` in `run_dbn.py`) so scripts no longer need to be edited for different GPU setups. You may need to install `tensorflow>=2.15.0` — see `requirements.txt` for all dependencies.
 
 My pipeline for processing involved using antscorticalthickness.sh (https://github.com/tannerjared/MRI_Guide/blob/master/preprocessing_antscorticalthickness.md) to skull strip and do other initial processing. Then I took the skull stripped brain (ExtractedBrain0N4.nii.gz), copied it into a working directory with the participant ID prepended, and used FLIRT to do a 12 degrees of freedom registration to the MNI152 1mm brain. I also completed a 6 DOF trial, which produced similar results, but opted for 12 to do a better job of normalizing brain sizes. I also tried the BrainNormalizedToTemplate.nii.gz images from the ANTs preprocessing (these are non-linearly transformed) but those values were significantly different from the affine methods; because the DeepBrainNet model was implemented on affine-registered brains, the non-linear values were deemed to be inaccurate.
 
@@ -33,7 +61,7 @@ If, for some reason, you end up with individual brain age estimates for each sli
 
 There are other methods of skull-stripping that might be used: BET, FreeSurfer, etc. I've had good experience with FreeSurfer and marginal with BET. I opted for the ANTs pipeline because is faster than FreeSurfer for a single brain using multiple cores (although I generally also process with FreeSurfer) and is the pipeline used by the developers of DeepBrainNet. Using any other preprocessing method will require comparisons with ANTS.
 
-With preprocessed data, I ran this on a cluser computer like this:
+With preprocessed data, I ran this on a cluster computer like this:
 `srun --mem=32gb --nodes=1 --partition=gpu --gpus=a100:1 --time=00:10:00 --pty bash -i`
 
 Within that interactive session I ran the following:
