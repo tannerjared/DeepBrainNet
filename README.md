@@ -47,7 +47,7 @@ It takes only a couple minutes to run on 205 brains. It's also quick on a local 
 
 ## Docker
 
-An ARM64 container of DeepBrainNet is avaiable here
+An ARM64 container of DeepBrainNet is available here
 
 `docker pull jjtanner/deepbrainnet:latest`
 
